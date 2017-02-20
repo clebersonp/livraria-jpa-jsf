@@ -46,7 +46,7 @@
 	
 	<fieldset>
 		<legend>Livros cadastrados</legend>
-		<h:dataTable value="#{livroBean.livros}" var="livro" border="0" cellpadding="10" cellspacing="5" bodyrows="10">
+		<h:dataTable value="#{livroBean.livros}" var="livro" border="0" cellpadding="10" cellspacing="5" >
 			<h:column>
 				<f:facet name="header">Título</f:facet>
 				<h:outputText value="#{livro.titulo}" />
