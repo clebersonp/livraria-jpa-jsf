@@ -12,6 +12,7 @@ import javax.faces.validator.ValidatorException;
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
+import br.com.caelum.livraria.util.RedirectView;
 
 @ViewScoped
 @ManagedBean
@@ -34,6 +35,12 @@ public class LivroBean {
 		if (!this.livro.getAutores().contains(autor)) {
 			this.livro.adicionaAutor(autor);
 		}
+	}
+	
+	// o JSF ao encontrar um tipo diferente de String, chamara o toString() do objeto para saber o nome da view
+	public RedirectView formAutor() {
+		System.out.println("Chamando o formulário do Autor");
+		return new RedirectView("autor");
 	}
 	
 	public Integer getAutorId() {
