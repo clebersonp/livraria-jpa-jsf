@@ -2,23 +2,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:body>
-		<h1>Novo Autor</h1>
+<ui:composition template="_template.xhtml">
+	<ui:define name="titulo">
+		Novo Autor
+	</ui:define>
+	<ui:define name="conteudo">
 		<h:form>
 			<fieldset>
 				<legend>Dados do Autor</legend>
 				<h:panelGrid columns="3">
 					<h:outputLabel value="Nome:" for="inputNome" />
-					<h:inputText id="inputNome" value="#{autorBean.autor.nome}" validatorMessage="O campo nome dever ter pelo menos 5 caracteres!">
+					<h:inputText id="inputNome" value="#{autorBean.autor.nome}"
+						validatorMessage="O campo nome dever ter pelo menos 5 caracteres!">
 						<f:validateLength minimum="4" />
 					</h:inputText>
-					<h:message for="inputNome"/>
+					<h:message for="inputNome" />
 					<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
 				</h:panelGrid>
 			</fieldset>
 		</h:form>
-	</h:body>
-
+	</ui:define>
+	<ui:define name="rodape">Cadastro de Autores </ui:define> 
+</ui:composition>
 </html>
