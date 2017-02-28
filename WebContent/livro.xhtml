@@ -58,35 +58,48 @@
 						<h:column>
 							<h:outputText value="#{autor.nome}" />
 						</h:column>
+						<h:column>
+							<h:commandLink value="X" action="#{livroBean.removerAutorDoLivro(autor)}"/>
+						</h:column>
 					</h:dataTable>
 				</fieldset>
 				<h:commandButton value="Gravar" action="#{livroBean.gravar}">
-					<f:ajax execute="@form" render="@form :livrosCadastrados" />
+					<f:ajax execute="@form" render="@form :formTabelaLivros:livrosCadastrados" />
 				</h:commandButton>
 			</h:form>
 			
 			<fieldset>
 				<legend>Livros cadastrados</legend>
-				<h:dataTable value="#{livroBean.livros}" var="livro" border="0" cellpadding="10" cellspacing="5" id="livrosCadastrados">
-					<h:column>
-						<f:facet name="header">Título</f:facet>
-						<h:outputText value="#{livro.titulo}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">ISBN</f:facet>
-						<h:outputText value="#{livro.isbn}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">Preço</f:facet>
-						<h:outputText value="#{livro.preco}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">Data Lançamento</f:facet>
-						<h:outputText value="#{livro.dataLancamento.time}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-						</h:outputText>
-					</h:column>
-				</h:dataTable>
+				<h:form id="formTabelaLivros">
+					<h:dataTable value="#{livroBean.livros}" var="livro" border="0" cellpadding="10" cellspacing="5" id="livrosCadastrados">
+						<h:column>
+							<f:facet name="header">Título</f:facet>
+							<h:outputText value="#{livro.titulo}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">ISBN</f:facet>
+							<h:outputText value="#{livro.isbn}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Preço</f:facet>
+							<h:outputText value="#{livro.preco}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Data Lançamento</f:facet>
+							<h:outputText value="#{livro.dataLancamento.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Remover</f:facet>
+							<h:commandLink value="remover" action="#{livroBean.remover(livro)}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">Alterar</f:facet>
+							<h:commandLink value="altera" action="#{livroBean.carregarLivroParaAlteracao(livro)}" />
+						</h:column>
+					</h:dataTable>
+				</h:form>
 			</fieldset>
 		</ui:define>
 		<ui:define name="rodape">Cadastro de Livros	</ui:define>

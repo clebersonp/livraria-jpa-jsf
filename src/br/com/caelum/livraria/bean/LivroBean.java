@@ -1,5 +1,6 @@
 package br.com.caelum.livraria.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -16,7 +17,9 @@ import br.com.caelum.livraria.util.RedirectView;
 
 @ViewScoped
 @ManagedBean
-public class LivroBean {
+public class LivroBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Livro livro = new Livro();
 
@@ -35,6 +38,21 @@ public class LivroBean {
 		if (!this.livro.getAutores().contains(autor)) {
 			this.livro.adicionaAutor(autor);
 		}
+	}
+	
+	public void remover(Livro livro) {
+		System.out.println("Removendo livro: " + livro.getTitulo());
+		new DAO<Livro>(Livro.class).remove(livro);
+	}
+	
+	public void carregarLivroParaAlteracao(Livro livro) {
+		System.out.println("Carregando o livro para alteração: " + livro.getTitulo());
+		this.livro = livro;
+	}
+	
+	public void removerAutorDoLivro(Autor autor) {
+		System.out.println("Removendo o Autor da lista: " + autor.getNome());
+		this.livro.removerAutor(autor);
 	}
 	
 	// o JSF ao encontrar um tipo diferente de String, chamara o toString() do objeto para saber o nome da view
@@ -60,15 +78,19 @@ public class LivroBean {
 	}
 	
 	public void gravar() {
-		System.out.println("Gravando livro " + this.livro.getTitulo());
 
 		if (livro.getAutores().isEmpty()) {
 //			throw new RuntimeException("Livro deve ter pelo menos um Autor.");
 			FacesContext.getCurrentInstance().addMessage("autor", new FacesMessage("Escolha pelo menos um Autor para gravar o livro!"));
 			return;
 		}
-
-		new DAO<Livro>(Livro.class).adiciona(this.livro);
+		if (this.livro.getId() == null) {
+			System.out.println("Gravando livro " + this.livro.getTitulo());
+			new DAO<Livro>(Livro.class).adiciona(this.livro);
+		} else {
+			System.out.println("Alterando o livro: " + this.livro.getTitulo());
+			new DAO<Livro>(Livro.class).atualiza(this.livro);
+		}
 		
 		this.livro = new Livro();
 	}

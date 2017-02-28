@@ -20,10 +20,36 @@
 						<f:validateLength minimum="4" />
 					</h:inputText>
 					<h:message for="inputNome" />
+					<h:outputLabel />
 					<h:commandButton value="Gravar" action="#{autorBean.gravar}" />
+					<h:outputLabel />
+					<h:commandLink value="cadastrar livros" action="livro?faces-redirect=true" immediate="true" />
 				</h:panelGrid>
 			</fieldset>
 		</h:form>
+		
+		<fieldset>
+			<legend>Autores cadastrados</legend>
+			<h:form>
+				<h:dataTable value="#{autorBean.autores}" var="autor" >
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+						<h:outputText value="#{autor.nome}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Alterar</f:facet>
+						<h:commandLink value="alterar">
+							<f:setPropertyActionListener value="#{autor}" target="#{autorBean.autor}"></f:setPropertyActionListener>
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Remover</f:facet>
+						<h:commandLink value="remover" action="#{autorBean.remover(autor)}" />
+					</h:column>
+				</h:dataTable>
+			</h:form>
+		</fieldset>
+		
 	</ui:define>
 	<ui:define name="rodape">Cadastro de Autores </ui:define> 
 </ui:composition>
