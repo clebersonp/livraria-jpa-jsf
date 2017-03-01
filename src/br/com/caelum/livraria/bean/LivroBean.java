@@ -13,7 +13,6 @@ import javax.faces.validator.ValidatorException;
 import br.com.caelum.livraria.dao.DAO;
 import br.com.caelum.livraria.modelo.Autor;
 import br.com.caelum.livraria.modelo.Livro;
-import br.com.caelum.livraria.util.RedirectView;
 
 @ViewScoped
 @ManagedBean
@@ -50,15 +49,26 @@ public class LivroBean implements Serializable {
 		this.livro = livro;
 	}
 	
+	public void buscaLivroPorId() {
+		System.out.println("Buscando um livro pelo Id no Request método GET");
+		Integer livroId = this.livro.getId();
+		
+		this.livro = new DAO<Livro>(Livro.class).buscaPorId(livroId);
+		
+		if (this.livro == null) {
+			this.livro = new Livro();
+		}
+	}
+	
 	public void removerAutorDoLivro(Autor autor) {
 		System.out.println("Removendo o Autor da lista: " + autor.getNome());
 		this.livro.removerAutor(autor);
 	}
 	
 	// o JSF ao encontrar um tipo diferente de String, chamara o toString() do objeto para saber o nome da view
-	public RedirectView formAutor() {
+	public String formAutor() {
 		System.out.println("Chamando o formulário do Autor");
-		return new RedirectView("autor");
+		return "autor?faces-redirect=true";
 	}
 	
 	public Integer getAutorId() {

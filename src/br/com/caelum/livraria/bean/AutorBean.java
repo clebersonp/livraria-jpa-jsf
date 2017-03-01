@@ -18,23 +18,29 @@ public class AutorBean implements Serializable {
 	
 	private Autor autor = new Autor();
 
-	public Autor getAutor() {
-		return autor;
+	public void buscaAutorPorId() {
+		System.out.println("Buscando um autor pelo Id");
+		
+		Integer autorId = this.autor.getId();
+		this.autor = new DAO<Autor>(Autor.class).buscaPorId(autorId);
+		
+		if (this.autor == null) {
+			this.autor = new Autor();
+		}
 	}
-
+	
 	public RedirectView gravar() {
 		
 		if (this.autor.getId() == null) {
 			System.out.println("Gravando autor " + this.autor.getNome());
 			new DAO<Autor>(Autor.class).adiciona(this.autor);
-			return new RedirectView("livro");
 		} else {
 			System.out.println("Alterando autor: " + this.autor.getNome());
 			new DAO<Autor>(Autor.class).atualiza(this.autor);
 		}
 
 		this.autor = new Autor();
-		return new RedirectView("autor");
+		return new RedirectView("livro");
 
 	}
 	
@@ -53,6 +59,10 @@ public class AutorBean implements Serializable {
 		return new DAO<Autor>(Autor.class).listaTodos();
 	}
 	
+	public Autor getAutor() {
+		return this.autor;
+	}
+
 	public void setAutor(Autor autor) {
 		this.autor = autor;
 	}

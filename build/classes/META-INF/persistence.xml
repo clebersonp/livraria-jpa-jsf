@@ -10,6 +10,7 @@
 		
 		<class>br.com.caelum.livraria.modelo.Livro</class>
 		<class>br.com.caelum.livraria.modelo.Autor</class>
+		<class>br.com.caelum.livraria.modelo.Usuario</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
